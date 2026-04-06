@@ -29,7 +29,7 @@ public class PedidoController {
     }
 
     // Criar pedido
-    @PostMapping
+    @PostMapping("/")
     public Pedido criarPedido(@Valid @RequestBody Pedido pedido) {
         return pedidoService.salvarPedido(pedido);
     }

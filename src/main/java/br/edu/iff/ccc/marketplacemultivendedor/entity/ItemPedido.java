@@ -1,12 +1,19 @@
 package br.edu.iff.ccc.marketplacemultivendedor.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 
 @Entity
 public class ItemPedido {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long itemPedidoId;
+
     @Min(value = 1, message = "A quantidade deve ser no mínimo 1")
     protected int quantidade;
     

@@ -12,8 +12,6 @@ import jakarta.persistence.OneToOne;
 @Entity
 public class Cliente extends Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long vendedorId;
     protected String nomeLoja;
     protected boolean statusAprovacao;

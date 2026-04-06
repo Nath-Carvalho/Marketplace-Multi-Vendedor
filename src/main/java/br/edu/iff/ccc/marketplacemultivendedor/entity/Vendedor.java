@@ -10,10 +10,6 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 public class Vendedor extends Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long vendedorId;
     
     protected String nomeLoja;
     protected boolean statusAprovacao;
@@ -37,13 +33,13 @@ public class Vendedor extends Usuario {
         this.nomeLoja = nomeLoja;
     }
 
-    public Long getVendedorId() {
-        return vendedorId;
-    }
+    // public Long getVendedorId() {
+    //     return vendedorId;
+    // }
 
-    public void setVendedorId(Long vendedorId) {
-        this.vendedorId = vendedorId;
-    }
+    // public void setVendedorId(Long vendedorId) {
+    //     this.vendedorId = vendedorId;
+    // }
 
     public void cadastrarProduto(Produto produto) {
     }

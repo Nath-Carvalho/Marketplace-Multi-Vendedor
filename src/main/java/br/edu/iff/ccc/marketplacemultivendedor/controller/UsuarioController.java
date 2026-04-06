@@ -30,7 +30,7 @@ public class UsuarioController {
 
     // Criar usuário
     @PostMapping
-    public Usuario criarUsuario(@Valid@RequestBody Usuario usuario) {
+    public Usuario criarUsuario(@Valid @RequestBody Usuario usuario) {
         return usuarioService.salvarUsuario(usuario);
     }
 

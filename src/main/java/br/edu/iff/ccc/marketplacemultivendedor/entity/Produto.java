@@ -1,9 +1,14 @@
 package br.edu.iff.ccc.marketplacemultivendedor.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -33,6 +38,14 @@ public class Produto {
 
     @ManyToOne
     private Loja loja;
+
+    @ManyToMany
+    @JoinTable(
+    name = "produtoCategoria", // Nome da tabela que o banco vai criar sozinho
+    joinColumns = @JoinColumn(name = "produto_id"),
+    inverseJoinColumns = @JoinColumn(name = "categoria_id")
+)
+    private List<Categoria> categorias;
 
 
     public Long getVendedorId() {

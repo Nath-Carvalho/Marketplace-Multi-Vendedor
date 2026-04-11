@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: headBase}"></th:block>
+</head>
+<body>
+    <div th:replace="~{fragments/layout :: cabecalho}"></div>
+
+    <div class="container mt-4">
+        <h2 style="color: #611212;" th:text="${clienteId == null ? 'Cadastrar Cliente' : 'Editar Cliente'}"></h2>
+        <hr>
+
+        <div class="card card-custom">
+            <form th:action="@{/clientes/salvar}" th:object="${clienteDTO}" method="post">
+                
+                <input type="hidden" name="clienteId" th:value="${clienteId}" th:if="${clienteId != null}" />
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nome Completo</label>
+                    <input type="text" class="form-control" th:field="*{nome}" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid' : ''">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">E-mail</label>
+                    <input type="text" class="form-control" th:field="*{email}" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Senha</label>
+                        <input type="password" class="form-control" th:field="*{senha}" th:classappend="${#fields.hasErrors('senha')} ? 'is-invalid' : ''">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Endereço</label>
+                        <input type="text" class="form-control" th:field="*{endereco}" placeholder="Este campo é opcional">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-3">Salvar</button>
+                <a href="/clientes" class="btn btn-secondary mt-3">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: rodape}"></div>
+</body>
+</html>

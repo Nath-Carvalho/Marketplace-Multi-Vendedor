@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: headBase}"></th:block>
+</head>
+<body>
+    <div th:replace="~{fragments/layout :: cabecalho}"></div>
+
+    <div class="container mt-4">
+        
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 style="color: #611212;">Detalhes do Pedido <span th:text="${'#' + pedido.pedidoId}"></span></h2>
+            <a href="/pedidos" class="btn btn-secondary">Voltar para Lista</a>
+        </div>
+        <hr>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card card-custom h-100">
+                    <h5 class="card-title border-bottom pb-2">Informações Gerais</h5>
+                    <p class="mb-1"><strong>Data:</strong> <span th:text="${#temporals.format(pedido.data, 'dd/MM/yyyy HH:mm')}"></span></p>
+                    <p class="mb-1"><strong>Status:</strong> <span class="badge bg-warning text-dark" th:text="${pedido.status}"></span></p>
+                    
+                    <h5 class="card-title border-bottom pb-2 mt-4">Dados do Cliente</h5>
+                    <p class="mb-1"><strong>Nome:</strong> <span th:text="${pedido.cliente.nome}"></span></p>
+                    <p class="mb-1"><strong>Email:</strong> <span th:text="${pedido.cliente.email}"></span></p>
+                    <p class="mb-1"><strong>Endereço:</strong> <span th:text="${pedido.cliente.endereco}"></span></p>
+                </div>
+            </div>
+
+            <div class="col-md-8 mb-4">
+                <div class="card card-custom h-100">
+                    <h5 class="card-title border-bottom pb-2">Itens do Pedido</h5>
+                    
+                    <table class="table table-sm table-hover mt-3">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Produto</th>
+                                <th class="text-center">Quantidade</th>
+                                <th class="text-end">Preço Unit.</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="item : ${pedido.itens}">
+                                <td th:text="${item.produto.nome}"></td>
+                                <td class="text-center" th:text="${item.quantidade}"></td>
+                                <td class="text-end" th:text="|R$ ${item.precoUnitario}|"></td>
+                                <td class="text-end fw-bold" th:text="|R$ ${item.subtotal}|"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert alert-success mt-auto text-end">
+                        Exibindo os detalhes registrados no momento da venda.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="~{fragments/layout :: rodape}"></div>
+</body>
+</html>

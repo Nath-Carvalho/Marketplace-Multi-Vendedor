@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: headBase}"></th:block>
+</head>
+<body>
+    
+    <div th:replace="~{fragments/layout :: cabecalho}"></div>
+
+    <div class="container mt-5 text-center">
+        <h1 class="display-4 fw-bold" style="color: #611212;">Bem-vindo ao Sistema Marketplace</h1>
+        <p class="lead mt-3 text-muted">Gerencie seus produtos, clientes, vendedores e pedidos de forma integrada e eficiente.</p>
+        <hr class="my-4">
+        
+        <div class="row mt-5">
+            
+            <div class="col-md-6 mb-4">
+                <div class="card card-custom text-center p-4 h-100">
+                    <h3 class="mb-3">📦 Produtos</h3>
+                    <p class="text-muted mb-4">Controle seu catálogo de mercadorias, preços e acompanhe o estoque em tempo real.</p>
+                    <a href="/produtos" class="btn btn-primary-custom mt-auto">Acessar Produtos</a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card card-custom text-center p-4 h-100">
+                    <h3 class="mb-3">🏪 Lojas (Vendedores)</h3>
+                    <p class="text-muted mb-4">Gerencie os vendedores parceiros, aprove cadastros e monitore as lojas do marketplace.</p>
+                    <a href="/vendedores" class="btn btn-primary-custom mt-auto">Acessar Lojas</a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card card-custom text-center p-4 h-100">
+                    <h3 class="mb-3">👥 Clientes</h3>
+                    <p class="text-muted mb-4">Gerencie os cadastros de usuários e controle os dados e endereços atrelados às contas.</p>
+                    <a href="/clientes" class="btn btn-primary-custom mt-auto">Acessar Clientes</a>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card card-custom text-center p-4 h-100">
+                    <h3 class="mb-3">🛒 Pedidos</h3>
+                    <p class="text-muted mb-4">Registre novas vendas, calcule subtotais, cancele compras e gerencie o estoque automaticamente.</p>
+                    <a href="/pedidos" class="btn btn-primary-custom mt-auto">Acessar Pedidos</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: rodape}"></div>
+    
+</body>
+</html>

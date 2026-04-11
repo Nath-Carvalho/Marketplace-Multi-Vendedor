@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: headBase}"></th:block>
+</head>
+<body>
+    <div th:replace="~{fragments/layout :: cabecalho}"></div>
+
+    <div class="container mt-4">
+        <h2 style="color: #611212;">Gestão de Vendedores / Lojas</h2>
+        <hr>
+        
+        <div th:if="${mensagemSucesso}" class="alert alert-success" th:text="${mensagemSucesso}"></div>
+        <div th:if="${mensagemErro}" class="alert alert-danger" th:text="${mensagemErro}"></div>
+
+        <a href="/vendedores/novo" class="btn btn-primary-custom mb-4">+ Cadastrar Nova Loja</a>
+
+        <div th:if="${#lists.isEmpty(vendedores)}" class="alert alert-warning">
+            Nenhum vendedor ou loja cadastrada no sistema.
+        </div>
+
+        <table th:unless="${#lists.isEmpty(vendedores)}" class="table table-custom table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome da Loja</th>
+                    <th>Responsável</th>
+                    <th>Email de Contato</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="vendedor : ${vendedores}">
+                    <td th:text="${vendedor.id}"></td>
+                    <td class="fw-bold" th:text="${vendedor.nomeLoja}"></td>
+                    <td th:text="${vendedor.nome}"></td>
+                    <td th:text="${vendedor.email}"></td>
+                    <td>
+                        <span class="badge bg-success" th:if="${vendedor.statusAprovacao}">Ativo</span>
+                        <span class="badge bg-danger" th:unless="${vendedor.statusAprovacao}">Bloqueado</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/vendedores/editar/{id}(id=${vendedor.id})}" class="btn btn-sm btn-warning">Editar</a>
+                        
+                        <a th:href="@{/vendedores/excluir/{id}(id=${vendedor.id})}" 
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Tem certeza que deseja excluir esta loja?');">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="~{fragments/layout :: rodape}"></div>
+</body>
+</html>

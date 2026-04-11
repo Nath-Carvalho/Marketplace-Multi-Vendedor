@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: headBase}"></th:block>
+</head>
+<body>
+    <div th:replace="~{fragments/layout :: cabecalho}"></div>
+
+    <div class="container mt-4">
+        <h2 style="color: #611212;">Registrar Nova Venda</h2>
+        <hr>
+
+        <div th:if="${mensagemSucesso}" class="alert alert-success" th:text="${mensagemSucesso}"></div>
+        <div th:if="${mensagemErro}" class="alert alert-danger" th:text="${mensagemErro}"></div>
+
+        <div class="card card-custom">
+            <form th:action="@{/pedidos/salvar}" th:object="${pedidoDTO}" method="post">
+                
+                <h5 class="mb-3 border-bottom pb-2">1. Dados do Cliente</h5>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Selecione o Cliente</label>
+                    
+                    <select class="form-select" th:field="*{clienteId}" th:classappend="${#fields.hasErrors('clienteId')} ? 'is-invalid' : ''">
+                        <option value="" disabled selected>-- Clique aqui para escolher um Cliente --</option>
+                        <option th:each="cliente : ${clientes}" 
+                                th:value="${cliente.id}" 
+                                th:text="|ID: ${cliente.id} - ${cliente.nome}|">
+                        </option>
+                    </select>
+                    
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('clienteId')}" th:errors="*{clienteId}"></div>
+                </div>
+
+                <h5 class="mb-3 border-bottom pb-2">2. Item do Pedido</h5>
+                <div class="row mb-4">
+                    <div class="col-md-8 mb-3">
+                        <label class="form-label fw-bold">Selecione o Produto</label>
+                        
+                        <select class="form-select" th:field="*{itens[0].produtoId}" th:classappend="${#fields.hasErrors('itens[0].produtoId')} ? 'is-invalid' : ''">
+                            <option value="" disabled selected>-- Clique aqui para escolher um Produto --</option>
+                            <option th:each="produto : ${produtos}" 
+                                    th:value="${produto.produtoId}" 
+                                    th:text="|ID: ${produto.produtoId} - ${produto.nome} (Estoque: ${produto.estoque})|">
+                            </option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('itens[0].produtoId')}" th:errors="*{itens[0].produtoId}"></div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Quantidade</label>
+                        <input type="number" class="form-control" th:field="*{itens[0].quantidade}" min="1" value="1" th:classappend="${#fields.hasErrors('itens[0].quantidade')} ? 'is-invalid' : ''">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('itens[0].quantidade')}" th:errors="*{itens[0].quantidade}"></div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info mt-3">
+                    <strong>Atenção:</strong> Ao clicar em salvar, o sistema irá validar se há estoque suficiente e fará a baixa automática.
+                </div>
+
+                <button type="submit" class="btn btn-success mt-2">Finalizar Pedido</button>
+                <a href="/pedidos" class="btn btn-secondary mt-2">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: rodape}"></div>
+</body>
+</html>

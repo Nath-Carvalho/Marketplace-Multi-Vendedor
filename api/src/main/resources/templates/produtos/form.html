@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: headBase}"></th:block>
+</head>
+<body>
+    <div th:replace="~{fragments/layout :: cabecalho}"></div>
+
+    <div class="container mt-4">
+        <h2 style="color: #611212;" th:text="${produtoId == null ? 'Cadastrar Produto' : 'Editar Produto'}"></h2>
+        <hr>
+
+        <div class="card card-custom">
+            <form th:action="@{/produtos/salvar}" th:object="${produtoDTO}" method="post">
+                
+                <input type="hidden" name="produtoId" th:value="${produtoId}" th:if="${produtoId != null}" />
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nome do Produto</label>
+                    <input type="text" class="form-control" th:field="*{nome}" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid' : ''">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Descrição</label>
+                    <textarea class="form-control" th:field="*{descricao}" th:classappend="${#fields.hasErrors('descricao')} ? 'is-invalid' : ''"></textarea>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Preço (R$)</label>
+                        <input type="number" step="0.01" class="form-control" th:field="*{preco}" th:classappend="${#fields.hasErrors('preco')} ? 'is-invalid' : ''">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Estoque Inicial</label>
+                        <input type="number" class="form-control" th:field="*{estoque}" th:classappend="${#fields.hasErrors('estoque')} ? 'is-invalid' : ''">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('estoque')}" th:errors="*{estoque}"></div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Loja / Vendedor</label>
+                        <select class="form-select" th:field="*{vendedorId}" th:classappend="${#fields.hasErrors('vendedorId')} ? 'is-invalid' : ''">
+                            <option value="" disabled selected>-- Escolha a Loja --</option>
+                            <option th:each="vendedor : ${vendedores}" 
+                                    th:value="${vendedor.id}" 
+                                    th:text="|${vendedor.nomeLoja} (ID: ${vendedor.id})|">
+                            </option>
+                        </select>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('vendedorId')}" th:errors="*{vendedorId}"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-3">Salvar</button>
+                <a href="/produtos" class="btn btn-secondary mt-3">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: rodape}"></div>
+</body>
+</html>

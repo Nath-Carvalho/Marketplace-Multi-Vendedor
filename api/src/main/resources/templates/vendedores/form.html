@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: headBase}"></th:block>
+</head>
+<body>
+    <div th:replace="~{fragments/layout :: cabecalho}"></div>
+
+    <div class="container mt-4">
+        <h2 style="color: #611212;" th:text="${vendedorId == null ? 'Cadastrar Novo Vendedor' : 'Editar Vendedor'}"></h2>
+        <hr>
+
+        <div class="card card-custom">
+            <form th:action="@{/vendedores/salvar}" th:object="${vendedorDTO}" method="post">
+                
+                <input type="hidden" name="vendedorId" th:value="${vendedorId}" th:if="${vendedorId != null}" />
+                
+                <h5 class="mb-3 border-bottom pb-2">Dados da Loja</h5>
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Nome da Loja</label>
+                    <input type="text" class="form-control" th:field="*{nomeLoja}" th:classappend="${#fields.hasErrors('nomeLoja')} ? 'is-invalid' : ''" placeholder="Ex: Açougue Premium">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('nomeLoja')}" th:errors="*{nomeLoja}"></div>
+                </div>
+
+                <h5 class="mb-3 border-bottom pb-2">Dados do Responsável</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Nome Completo</label>
+                        <input type="text" class="form-control" th:field="*{nome}" th:classappend="${#fields.hasErrors('nome')} ? 'is-invalid' : ''">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">E-mail</label>
+                        <input type="email" class="form-control" th:field="*{email}" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Senha de Acesso</label>
+                    <input type="password" class="form-control" th:field="*{senha}" th:classappend="${#fields.hasErrors('senha')} ? 'is-invalid' : ''">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></div>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-2">Salvar Loja</button>
+                <a href="/vendedores" class="btn btn-secondary mt-2">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+    <div th:replace="~{fragments/layout :: rodape}"></div>
+</body>
+</html>

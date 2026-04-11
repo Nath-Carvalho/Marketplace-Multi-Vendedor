@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/layout :: headBase}"></th:block>
+</head>
+<body>
+    <div th:replace="~{fragments/layout :: cabecalho}"></div>
+
+    <div class="container mt-4">
+        <h2 style="color: #611212;">Gerenciamento de Pedidos</h2>
+        <hr>
+        
+        <div th:if="${mensagemSucesso}" class="alert alert-success" th:text="${mensagemSucesso}"></div>
+        <div th:if="${mensagemErro}" class="alert alert-danger" th:text="${mensagemErro}"></div>
+
+        <a href="/pedidos/novo" class="btn btn-primary-custom mb-4">+ Registrar Novo Pedido</a>
+
+        <div th:if="${#lists.isEmpty(pedidos)}" class="alert alert-warning">
+            Nenhum pedido registrado no sistema.
+        </div>
+
+        <table th:unless="${#lists.isEmpty(pedidos)}" class="table table-custom table-hover">
+            <thead>
+                <tr>
+                    <th>Nº do Pedido</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pedido : ${pedidos}">
+                    <td th:text="${'#000' + pedido.pedidoId}"></td>
+                    <td th:text="${#temporals.format(pedido.data, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td>
+                        <span th:class="${pedido.status == 'CANCELADO'} ? 'badge bg-danger' : 'badge bg-warning text-dark'" 
+                              th:text="${pedido.status}"></span>
+                    </td>
+                    <td>
+                        <a th:href="@{/pedidos/detalhes/{id}(id=${pedido.pedidoId})}" class="btn btn-sm btn-info text-white">Ver Detalhes</a>
+                        
+                        <a th:if="${pedido.status != 'CANCELADO'}" 
+                           th:href="@{/pedidos/cancelar/{id}(id=${pedido.pedidoId})}" 
+                           class="btn btn-sm btn-outline-danger"
+                           onclick="return confirm('Deseja realmente cancelar este pedido? O estoque será devolvido.');">
+                           Cancelar
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:replace="~{fragments/layout :: rodape}"></div>
+</body>
+</html>

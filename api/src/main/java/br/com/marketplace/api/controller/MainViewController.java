@@ -8,7 +8,6 @@ public class MainViewController {
 
     @GetMapping("/")
     public String paginaInicial() {
-        // Agora, em vez do redirect, ele retorna o nome do arquivo "index.html"
         return "index"; 
     }
 }

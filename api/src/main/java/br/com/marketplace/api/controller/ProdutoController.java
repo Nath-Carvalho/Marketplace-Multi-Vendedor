@@ -20,7 +20,6 @@ public class ProdutoController {
     private final ProdutoService service;
     private final VendedorRepository vendedorRepository;
 
-    // Construtor atualizado para receber o VendedorRepository
     public ProdutoController(ProdutoService service, VendedorRepository vendedorRepository) {
         this.service = service;
         this.vendedorRepository = vendedorRepository;
@@ -36,7 +35,6 @@ public class ProdutoController {
     @GetMapping("/novo")
     public String mostrarFormularioCriacao(Model model) {
         model.addAttribute("produtoDTO", new ProdutoRequestDTO());
-        // Busca os vendedores no banco para popular o <select>
         model.addAttribute("vendedores", vendedorRepository.findAll()); 
         return "produtos/form";
     }
@@ -66,7 +64,7 @@ public class ProdutoController {
                          BindingResult result,
                          @RequestParam(required = false) Integer produtoId, 
                          RedirectAttributes redirectAttributes,
-                         Model model) { // Adicionamos o Model aqui
+                         Model model) { 
         
         if (result.hasErrors()) {
             model.addAttribute("vendedores", vendedorRepository.findAll());
